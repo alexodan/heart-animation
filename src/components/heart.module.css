@@ -1,0 +1,114 @@
+.wrapper {
+  border: none;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  padding: 15px;
+  position: relative;
+  background-color: transparent;
+}
+
+.wrapper:focus,
+.wrapper:hover {
+  outline: none;
+  border-color: transparent;
+}
+
+.wrapper:hover {
+  background-color: #3b3b3b;
+  cursor: pointer;
+}
+
+.wrapper:hover .heart {
+  color: red;
+}
+
+.heart {
+  width: 100%;
+  height: 100%;
+}
+
+.heart.animating {
+  animation: heart-visible 2000ms forwards;
+}
+
+.circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+/*
+  when circle transition ends
+  the particles transition begins
+*/
+.circle.animating {
+  animation: circle-expand 2000ms forwards;
+}
+
+.particle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  opacity: 0;
+}
+
+.particle.animating {
+  animation: particle-effect 2000ms;
+}
+
+@keyframes heart-visible {
+  0% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    color: red;
+    fill: red;
+  }
+}
+
+@keyframes circle-expand {
+  0% {
+    width: 35px;
+    height: 35px;
+    opacity: 1;
+    background-color: rgb(255, 58, 58);
+  }
+  50% {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+  }
+  100% {
+    background-color: transparent;
+    opacity: 0;
+  }
+}
+
+@keyframes particle-effect {
+  50% {
+    opacity: 0;
+    transform: translate(30px, -45px) rotate(var(--angle));
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(30px, -5px) rotate(var(--angle));
+    opacity: 0;
+  }
+}

@@ -9,7 +9,7 @@ Eventually, the objective of this repo is to grow into a collection of little an
 
 A Vite + React project set up as a lightweight sandbox for UI animations.
 
-1. Starts with a heart animation component (e.g. like/favorite interaction)
+### 1st Animation: Heart component (e.g. like/favorite interaction)
 
 Taken from Josh Comeau's course whimsical animations
 
@@ -19,6 +19,11 @@ Focuses on:
 - Smooth transitions
 - Easing and timing curves
 - Reusable animation patterns - maybe
+
+#### Learnings
+
+- To fill...
+- Once I complete
 
 ## 🧰 Tech Stack
 
