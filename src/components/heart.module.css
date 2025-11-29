@@ -29,7 +29,7 @@
 }
 
 .heart.animating {
-  animation: heart-visible 2000ms forwards;
+  animation: heart-visible 1000ms forwards;
 }
 
 .circle {
@@ -48,7 +48,7 @@
   the particles transition begins
 */
 .circle.animating {
-  animation: circle-expand 2000ms forwards;
+  animation: circle-expand 1000ms forwards;
 }
 
 .particle {
@@ -57,11 +57,14 @@
   border-radius: 50%;
   background-color: white;
   position: absolute;
+  top: 50%;
+  left: 50%;
   opacity: 0;
+  transform: translate(-50%, -50%) rotate(var(--angle)) translateY(0);
 }
 
 .particle.animating {
-  animation: particle-effect 2000ms;
+  animation: particle-effect 1000ms ease-out;
 }
 
 @keyframes heart-visible {
@@ -102,13 +105,11 @@
 @keyframes particle-effect {
   50% {
     opacity: 0;
-    transform: translate(30px, -45px) rotate(var(--angle));
-  }
-  95% {
-    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(0);
   }
   100% {
-    transform: translate(30px, -5px) rotate(var(--angle));
-    opacity: 0;
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--angle))
+      translateY(var(--distance));
   }
 }

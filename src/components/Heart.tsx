@@ -26,15 +26,21 @@ export function Heart() {
         />
       </svg>
       {Array.from({ length: 12 }).map((_, i) => {
-          const angle = (i * 360) / 12
-          return (
-            <div
-              key={i}
-              style={{ '--angle': `${angle}deg` } as React.CSSProperties}
-              className={`${styles.particle} ${isActive ? styles.animating : ''}`}
-            />
-          )
-        })}
+        const angle = (i * 360) / 12
+        const distance = i % 2 ? 50 : 60
+        return (
+          <div
+            key={i}
+            style={
+              {
+                '--angle': `${angle}deg`,
+                '--distance': `-${distance}px`,
+              } as React.CSSProperties
+            }
+            className={`${styles.particle} ${isActive ? styles.animating : ''}`}
+          />
+        )
+      })}
     </button>
   )
 }
