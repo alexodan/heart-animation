@@ -1,3 +1,8 @@
+:root {
+  --animation-duration: 1000ms;
+  --heart-color: red;
+}
+
 .wrapper {
   border: none;
   border-radius: 50%;
@@ -19,7 +24,7 @@
 }
 
 .wrapper:hover .heart {
-  color: red;
+  color: var(--heart-color);
 }
 
 .heart {
@@ -28,7 +33,21 @@
 }
 
 .heart.animating {
-  animation: heart-visible 1500ms forwards;
+  animation: scaleUp var(--animation-duration) forwards;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    color: var(--heart-color);
+    fill: var(--heart-color);
+  }
 }
 
 .circle {
@@ -43,40 +62,7 @@
 }
 
 .circle.animating {
-  animation: circle-expand 1500ms forwards;
-}
-
-.particle {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: white;
-  inset: 0;
-  margin: auto;
-  display: block;
-  position: absolute;
-  opacity: 0;
-}
-
-.particle.animating {
-  animation: particle-effect 1500ms ease-out;
-}
-
-@keyframes heart-visible {
-  0% {
-    transform: scale(0);
-  }
-  40% {
-    transform: scale(0);
-  }
-  80% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-    color: red;
-    fill: red;
-  }
+  animation: circle-expand var(--animation-duration) forwards;
 }
 
 @keyframes circle-expand {
@@ -97,6 +83,22 @@
     width: 100%;
     height: 100%;
   }
+}
+
+.particle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  inset: 0;
+  margin: auto;
+  display: block;
+  position: absolute;
+  opacity: 0;
+}
+
+.particle.animating {
+  animation: particle-effect var(--animation-duration) ease-out;
 }
 
 @keyframes particle-effect {

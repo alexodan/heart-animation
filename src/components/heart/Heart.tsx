@@ -6,8 +6,8 @@ export function Heart() {
   const [isActive, setIsActive] = useState(false)
 
   return (
-    // how to a11y?
     <button
+      // how to a11y?
       aria-label="like"
       onClick={() => setIsActive(!isActive)}
       className={styles.wrapper}
