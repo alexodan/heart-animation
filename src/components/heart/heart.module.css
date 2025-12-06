@@ -1,13 +1,25 @@
 :root {
-  --animation-duration: 1000ms;
+  --animation-duration: 400ms;
   --heart-color: red;
 }
+
+/*
+# Animation Description:
+
+- After clicking (liking)
+  1) The Heart disappears suddenly
+  2) An inner circle appears suddenly which occupies 50% of the width of the container circle
+     and expands while changing its color as well.
+  3) Once the circle reaches full width, the particles appear suddenly and expand, they start to fade out
+     after almost reaching its final placement (around 95%)
+  4) While the particles are expanding the heart reappears, increasing from zero width to its original size
+*/
 
 .wrapper {
   border: none;
   border-radius: 50%;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   padding: 15px;
   position: relative;
   background-color: transparent;
@@ -33,55 +45,47 @@
 }
 
 .heart.animating {
-  animation: scaleUp var(--animation-duration) forwards;
+  scale: 0;
+  animation: scaleUp var(--animation-duration) ease
+    calc(var(--animation-duration) / 2) forwards;
 }
 
 @keyframes scaleUp {
-  0% {
-    transform: scale(0);
-  }
-  80% {
-    transform: scale(1.1);
-  }
   100% {
-    transform: scale(1);
+    scale: 1;
     color: var(--heart-color);
     fill: var(--heart-color);
   }
 }
 
 .circle {
-  width: 35px;
-  height: 35px;
+  width: 50%;
+  height: 50%;
   border-radius: 50%;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: auto;
+  inset: 0;
   opacity: 0;
+  background-color: rgba(211, 96, 182, 0.739);
 }
 
 .circle.animating {
-  animation: circle-expand var(--animation-duration) forwards;
+  animation: circle-expand var(--animation-duration);
 }
 
 @keyframes circle-expand {
   0% {
-    width: 35px;
-    height: 35px;
     opacity: 1;
-    background-color: rgba(230, 117, 202, 0.739);
   }
   50% {
-    width: 110%;
-    height: 110%;
     opacity: 1;
   }
+  80% {
+    scale: 2.2;
+  }
   100% {
-    background-color: transparent;
     opacity: 0;
-    width: 100%;
-    height: 100%;
+    scale: 2;
   }
 }
 
@@ -98,16 +102,28 @@
 }
 
 .particle.animating {
-  animation: particle-effect var(--animation-duration) ease-out;
+  animation: particle-effect calc(var(--animation-duration) * 2) ease forwards,
+    fade-out calc(var(--animation-duration) * 3) ease-out
+      var(--animation-duration);
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes particle-effect {
   50% {
-    opacity: 0;
     transform: rotate(var(--angle));
   }
   100% {
-    opacity: 1;
     transform: rotate(var(--angle)) translateY(var(--distance));
   }
 }

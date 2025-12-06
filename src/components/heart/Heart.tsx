@@ -18,7 +18,7 @@ export function Heart() {
       <HeartIcon isActive={isActive} />
       {Array.from({ length: 12 }).map((_, i) => {
         const angle = (i * 360) / 12
-        const distance = i % 2 ? 50 : 60
+        const distance = i % 2 ? 40 : 50
         return (
           <span
             key={i}
