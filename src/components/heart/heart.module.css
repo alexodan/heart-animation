@@ -98,29 +98,20 @@
   margin: auto;
   display: block;
   position: absolute;
-  opacity: 0;
-}
-
-.particle.animating {
-  animation: particle-effect calc(var(--animation-duration) * 2) ease forwards,
-    fade-out calc(var(--animation-duration) * 3) ease-out
-      var(--animation-duration);
+  opacity: 1;
+  animation: disperse calc(var(--animation-duration) * 2)
+      cubic-bezier(0.02, 0.33, 0.04, 1) forwards,
+    fade-out calc(var(--animation-duration) * 3) ease-out forwards;
 }
 
 @keyframes fade-out {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
+  to {
     opacity: 0;
   }
 }
 
-@keyframes particle-effect {
-  50% {
+@keyframes disperse {
+  0% {
     transform: rotate(var(--angle));
   }
   100% {
