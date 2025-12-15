@@ -1,7 +1,8 @@
 /**
  * This function returns an array of particle objects with properties that are derived from the `chaos`
- * parameter. More chaos means more particles and also distance randomness. It will make
- * the particles "sparkle" (twinkle?) or not too (the flashy appearance and disappearance (still TODO)).
+ * parameter. More chaos means more particles but also distance and velocity randomness. Not all particles
+ * travel to the same distance, and neither they do at the same speed. It will also make them "sparkle"
+ * (twinkle?) or not if chaos = 0.
  *
  * The formula is just a linear proggression => MIN + MAX / (100 / chaos):
  * Let's say I want minimum 10 particles and maximum 50,
@@ -10,6 +11,8 @@
  * 50 chaos will be 30
  * ...
  * 100 chaos will be 50
+ *
+ * And actually all the others derive from a similar calculation, speed, distance, all oscilate between a range [a, b].
  */
 const MINIMUM_PARTICLES = 12
 const MAXIMUM_PARTICLES = 50
