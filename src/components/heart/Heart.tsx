@@ -8,7 +8,7 @@ export function HeartDemo() {
   const [isActive, setIsActive] = useState(false)
   const [chaos, setChaos] = useState(0)
 
-  const { particles } = isActive ? getParticles(chaos) : {}
+  const particles = isActive ? getParticles(chaos) : []
 
   return (
     <>
@@ -23,15 +23,15 @@ export function HeartDemo() {
         <HeartIcon isActive={isActive} />
         {isActive &&
           particles?.map((particle, i) => {
-            const distance = i % 2 ? 35 : 45
             return (
               <span
                 key={i}
                 style={
                   {
                     '--angle': `${particle.angle}deg`,
-                    '--distance': `-${distance}px`,
+                    '--distance': `-${particle.distance}px`,
                     '--color': particle.color,
+                    '--disperse-duration': `${particle.disperseDuration}ms`,
                   } as React.CSSProperties
                 }
                 className={styles.particle}
