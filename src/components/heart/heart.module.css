@@ -1,0 +1,186 @@
+:root {
+  --animation-duration: 400ms;
+  --heart-color: red;
+  --hover-bg: #e6e7e9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hover-bg: #1c1d20;
+  }
+}
+
+.slider {
+  margin: 40px auto;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  &Label {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/*
+# Animation Description:
+
+- After clicking (liking)
+  1) The Heart disappears suddenly
+  2) An inner circle appears suddenly which occupies 50% of the width of the container circle
+     and expands while changing its color as well.
+  3) Once the circle reaches full width, the particles appear suddenly and expand, they start to fade out
+     after almost reaching its final placement (around 95%)
+  4) While the particles are expanding the heart reappears, increasing from zero width to its original size
+*/
+
+.wrapper {
+  border: none;
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+  padding: 15px;
+  position: relative;
+  background-color: transparent;
+}
+
+.wrapper:focus,
+.wrapper:hover {
+  border-color: transparent;
+}
+
+.wrapper:hover {
+  background: var(--hover-bg);
+  cursor: pointer;
+}
+
+.wrapper:hover .heart {
+  color: var(--heart-color);
+}
+
+.heart {
+  width: 100%;
+  height: 100%;
+}
+
+.heart.animating {
+  scale: 0;
+  animation: scaleUp var(--animation-duration)
+    /* Generated with https://easingwizard.com/ */
+    linear(
+      0,
+      0.248 3.6%,
+      0.462 7.2%,
+      0.652 11%,
+      0.814 14.9%,
+      0.884 16.9%,
+      0.95 19%,
+      1.008 21.1%,
+      1.059 23.2%,
+      1.104 25.4%,
+      1.142 27.6%,
+      1.175 29.9%,
+      1.201 32.2%,
+      1.217 34%,
+      1.23 35.8%,
+      1.239 37.6%,
+      1.246 39.5%,
+      1.249 41.5%,
+      1.25 43.5%,
+      1.248 45.6%,
+      1.242 47.8%,
+      1.228 51.6%,
+      1.205 55.8%,
+      1.177 60.2%,
+      1.084 73.4%,
+      1.058 77.7%,
+      1.038 81.6%,
+      1.02 86.1%,
+      1.008 90.5%,
+      1.002 94.9%,
+      1
+    )
+    calc(var(--animation-duration) / 2) forwards;
+}
+
+@keyframes scaleUp {
+  100% {
+    scale: 1;
+    color: var(--heart-color);
+    fill: var(--heart-color);
+  }
+}
+
+.circle {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  position: absolute;
+  margin: auto;
+  inset: 0;
+  opacity: 0;
+  background-color: rgba(211, 96, 182, 0.739);
+}
+
+.circle.animating {
+  animation: circle-expand var(--animation-duration);
+}
+
+@keyframes circle-expand {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  80% {
+    scale: 2.2;
+  }
+  100% {
+    opacity: 0;
+    scale: 2;
+  }
+}
+
+.particle {
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background-color: var(--color);
+  inset: 0;
+  margin: auto;
+  display: block;
+  position: absolute;
+  opacity: 0;
+  animation: disperse var(--disperse-duration) cubic-bezier(0.02, 0.33, 0.04, 1)
+      forwards,
+    sparkle calc(var(--animation-duration)) infinite alternate,
+    fade-out var(--fade-duration) var(--fade-delay) ease-out backwards;
+}
+
+@keyframes sparkle {
+  from {
+    background-color: var(--color);
+  }
+  to {
+    background-color: var(--opposite-color);
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes disperse {
+  0% {
+    transform: rotate(var(--angle));
+  }
+  100% {
+    transform: rotate(var(--angle)) translateY(var(--distance));
+  }
+}
