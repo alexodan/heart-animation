@@ -29,9 +29,13 @@ export function HeartDemo() {
                 style={
                   {
                     '--angle': `${particle.angle}deg`,
-                    '--distance': `-${particle.distance}px`,
                     '--color': particle.color,
                     '--disperse-duration': `${particle.disperseDuration}ms`,
+                    '--distance': `-${particle.distance}px`,
+                    '--fade-delay': particle.fadeDelay,
+                    '--fade-duration': particle.fadeDuration,
+                    '--opposite-color': particle.oppositeColor,
+                    '--size': particle.size,
                   } as React.CSSProperties
                 }
                 className={styles.particle}

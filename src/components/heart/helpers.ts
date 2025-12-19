@@ -1,21 +1,39 @@
 const MINIMUM_PARTICLES = 12
-const MAXIMUM_PARTICLES = 50
-
-const MIN_DISTANCE = 30
-const MAX_DISTANCE = 45
+const MAXIMUM_PARTICLES = 100
+const MIN_DISTANCE = 25
+const MAX_DISTANCE = 40
+const MIN_DISPERSE_DURATION = 400
+const MAX_DISPERSE_DURATION = 1200
+const MIN_FADE_DURATION = 400
+const MAX_FADE_DURATION = 1500
 
 type ParticleProperties = {
   angle: number
   distance: number
   color: string
   disperseDuration: number
+  fadeDelay: string
+  fadeDuration: string
+  oppositeColor?: string
+  size: string
+}
+
+type HSLColor = {
+  h: number
+  s: number
+  l: number
+  hsl: string
 }
 
 const basicAnimation = (index: number): ParticleProperties => ({
   angle: 360 - 30 * index,
-  distance: index % 2 ? 40 : 50,
+  distance: index % 2 ? 30 : 36,
   color: 'white',
   disperseDuration: 600,
+  fadeDuration: `500ms`,
+  fadeDelay: '600ms',
+  oppositeColor: 'white',
+  size: `8px`,
 })
 
 /**
@@ -44,18 +62,35 @@ export function getParticles(chaos: number): ParticleProperties[] {
       const angle = Math.random() * 360
       // TODO: colors are not harmonic, replace generator
       const distance = randomBetween(MIN_DISTANCE, MAX_DISTANCE)
-      const color = generateRandomColor(chaos)
-      particles.push({
-        angle,
-        color,
+      const color = generateRandomColor()
+      const oppositeColor = getOppositeColor(color)
+      const disperseDuration = linearConversion(
         distance,
-        disperseDuration: linearConversion(
+        MIN_DISTANCE,
+        MAX_DISTANCE,
+        MIN_DISPERSE_DURATION,
+        MAX_DISPERSE_DURATION,
+      )
+      const fadeDuration =
+        linearConversion(
           distance,
           MIN_DISTANCE,
           MAX_DISTANCE,
-          600,
-          1000,
-        ),
+          MIN_FADE_DURATION,
+          MAX_FADE_DURATION,
+        ) + 'ms'
+      const fadeDelay =
+        linearConversion(distance, MIN_DISTANCE, MAX_DISTANCE, 400, 600) + 'ms'
+      const size = randomBetween(5, 10) + 'px'
+      particles.push({
+        angle,
+        color: color.hsl,
+        disperseDuration,
+        distance,
+        fadeDelay,
+        fadeDuration,
+        oppositeColor: oppositeColor,
+        size,
       })
     }
   }
@@ -63,20 +98,15 @@ export function getParticles(chaos: number): ParticleProperties[] {
   return particles
 }
 
-// https://stackoverflow.com/questions/43044/algorithm-to-randomly-generate-an-aesthetically-pleasing-color-palette
-export function generateRandomColor(chaos: number) {
-  let red = Math.floor(Math.random() * 256)
-  let green = Math.floor(Math.random() * 256)
-  let blue = Math.floor(Math.random() * 256)
+function generateRandomColor(): HSLColor {
+  const h = randomBetween(1, 360)
+  const s = randomBetween(0, 100)
+  const l = randomBetween(0, 100)
+  return { h, s, l, hsl: 'hsl(' + h + ',' + s + '%,' + l + '%)' }
+}
 
-  const b = chaos & 0xff,
-    g = (chaos & 0xff00) >>> 8,
-    r = (chaos & 0xff0000) >>> 16
-  red = (red + r) / 2
-  green = (green + g) / 2
-  blue = (blue + b) / 2
-
-  return `rgb(${red}, ${green}, ${blue})`
+export function getOppositeColor(hsl: HSLColor) {
+  return `hsl(${hsl.h + 180}deg ${hsl.s}% ${hsl.l}%)`
 }
 
 /**

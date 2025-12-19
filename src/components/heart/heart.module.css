@@ -37,8 +37,8 @@
 .wrapper {
   border: none;
   border-radius: 50%;
-  height: 80px;
-  width: 80px;
+  height: 70px;
+  width: 70px;
   padding: 15px;
   position: relative;
   background-color: transparent;
@@ -143,8 +143,8 @@
 }
 
 .particle {
-  width: 10px;
-  height: 10px;
+  width: var(--size);
+  height: var(--size);
   border-radius: 50%;
   background-color: var(--color);
   inset: 0;
@@ -154,7 +154,17 @@
   opacity: 0;
   animation: disperse var(--disperse-duration) cubic-bezier(0.02, 0.33, 0.04, 1)
       forwards,
-    fade-out calc(var(--animation-duration) * 3) 600ms ease-out backwards;
+    sparkle calc(var(--animation-duration)) infinite alternate,
+    fade-out var(--fade-duration) var(--fade-delay) ease-out backwards;
+}
+
+@keyframes sparkle {
+  from {
+    background-color: var(--color);
+  }
+  to {
+    background-color: var(--opposite-color);
+  }
 }
 
 @keyframes fade-out {
